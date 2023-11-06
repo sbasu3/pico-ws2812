@@ -1,0 +1,24 @@
+{
+  "cmake.configureOnOpen": false,
+  "cmake.statusbar.advanced": {
+    "debug" : {
+      "visibility": "hidden"
+              },
+    "launch" : {
+      "visibility": "hidden"
+               },
+    "build" : {
+      "visibility": "default"
+               },
+    "buildTarget" : {
+      "visibility": "hidden"
+               },
+     },
+     "cmake.buildBeforeRun": true,
+     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cortex-debug.openocdPath": "/home/subho/code/pico/openocd/src",
+    "files.associations": {
+      "ranges": "c"
+    }
+ 
+}
