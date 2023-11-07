@@ -14,11 +14,14 @@
       "visibility": "hidden"
                },
      },
-     "cmake.buildBeforeRun": true,
+     "cmake.buildBeforeRun": false,
      "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-    "cortex-debug.openocdPath": "/home/subho/code/pico/openocd/src",
+    "cortex-debug.openocdPath": "/home/subho/code/pico/openocd/src/openocd",
+    "cortex-debug.gdbPath": "/usr/bin/gdb-multiarch",
     "files.associations": {
       "ranges": "c"
-    }
+    },
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "cortex-debug.variableUseNaturalFormat": false
  
 }

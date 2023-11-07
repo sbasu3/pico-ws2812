@@ -21,7 +21,7 @@
 // start of each value fragment (+1 for NULL terminator)
 static uint32_t fragment_start[TOTAL_PIXELS + 1];
 
-pixel_line_t screen[NUM_BUFFER][NUM_PIXELS_Y];
+pixel_line_t *screen[NUM_BUFFER];
 
 frame_t image[NUM_BUFFER];
 

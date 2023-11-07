@@ -9,17 +9,18 @@ void pixel_chain_init(pixel_line_t *pixels , bool dir , uint16_t num_pixels){
 
     int i = 0;
     
-    dir = ~dir;
+    uint sizeY = num_pixels/NUM_PIXELS_X;
 
-    for(i = 0; i < num_pixels; i = i + NUM_PIXELS_X){
-        pixels->dir = ~dir;
+    pixels 
 
-        if(i <= num_pixels - NUM_PIXELS_X)
-            pixels->next_ptr = ++pixels;
-        else
-            pixels->next_ptr = NULL;
-
+    for(i = 0; i < sizeY; i++){
+        
+        pixels->dir = dir;
+        dir = ~dir;
+        pixels->next_ptr = malloc(sizeof(pixel_line_t));
+        pixels = pixels->next_ptr;
     } 
+    pixels->next_ptr = NULL;
 }
 
 
