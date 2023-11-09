@@ -15,6 +15,12 @@ uint32_t **screen;
 
 frame_t image;
 
+static char *header_data =
+	"````````````````````````````````````````````````````````````````"
+	"````````]/OI````````]/OI````````````````]/OI````````]/OI````````"
+	"`-C.`^?D`````````````````^?D`-C.`^?D`-C.`^?D`````````^?D`-C.`^?D"
+	"`````^?D`-C.`^?D`^?D`-C.`^?D`````````````^?D`-C.`-C.`^?D````````"
+	"";
 
 static inline void put_pixel(uint32_t pixel_grb) {
     pio_sm_put_blocking(pio0, 0, pixel_grb << 8u);
@@ -43,9 +49,11 @@ int main() {
     ws2812_program_init(pio, sm, offset, WS2812_PIN_BASE, 800000, false);
 
     int t = 0;
+    read_data(&image, header_data);
+
     while (1) {
 
-        randomize(&image);
+        //randomize(&image);
         pack_pixels(&image , screen);
 
         int brightness = 0;

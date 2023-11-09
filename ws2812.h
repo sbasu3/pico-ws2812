@@ -35,6 +35,7 @@ typedef struct {
 void pixel_reset(uint32_t **pixels, uint32_t val);
 void pack_pixels(frame_t *frame ,uint32_t  **pixels);
 
+void read_data(frame_t *frame, char * data);
 
 
 // Helper functions

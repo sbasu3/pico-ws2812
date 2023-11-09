@@ -35,8 +35,8 @@ pico_generate_pio_header(pico_ws2812 ${CMAKE_CURRENT_LIST_DIR}/ws2812.pio OUTPUT
 pico_set_program_name(pico_ws2812 "pico_ws2812")
 pico_set_program_version(pico_ws2812 "0.1")
 
-pico_enable_stdio_uart(pico_ws2812 1)
-pico_enable_stdio_usb(pico_ws2812 0)
+pico_enable_stdio_uart(pico_ws2812 0)
+pico_enable_stdio_usb(pico_ws2812 1)
 
 # Add the standard library to the build
 target_link_libraries(pico_ws2812
