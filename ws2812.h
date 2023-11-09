@@ -21,14 +21,8 @@
 
 enum dir_t { LEFT_TO_RIGHT = 0, RIGHT_TO_LEFT = 1};
 
-//Contains WS2812 Data in line format
-struct pixel_ll{
-    uint32_t data[NUM_PIXELS_X];
-    bool dir;
-    struct pixel_ll *next_ptr;
-};
-
-typedef struct pixel_ll pixel_line_t;
+//Contains WS2812 Data in 2D array format
+//uint32_t pixel[NUM_PIXELS_X][NUM_PIXELS_Y];
 
 //Contains MxN image
 typedef struct {
@@ -38,13 +32,13 @@ typedef struct {
 }frame_t;
 
 
-void pixel_chain_init(pixel_line_t *pixels , bool dir , uint16_t num_pixels);
-void pack_pixels(frame_t *frame , pixel_line_t *pixels);
+void pixel_reset(uint32_t **pixels, uint32_t val);
+void pack_pixels(frame_t *frame ,uint32_t  **pixels);
 
 
 
 // Helper functions
-void copy_row(frame_t *frame, uint start_addr, pixel_line_t *pixels);
+void copy_row(frame_t *frame, uint row, uint32_t **pixels);
 void randomize(frame_t *frame);
 
 #endif
