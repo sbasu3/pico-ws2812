@@ -5,7 +5,7 @@
 #include "hardware/clocks.h"
 
 #include "ws2812.h"
-#include "ws2812.pio.h"
+
 
 
 #define NUM_BUFFER 2
@@ -22,9 +22,7 @@ static char *header_data =
 	"`````^?D`-C.`^?D`^?D`-C.`^?D`````````````^?D`-C.`-C.`^?D````````"
 	"";
 
-static inline void put_pixel(uint32_t pixel_grb) {
-    pio_sm_put_blocking(pio0, 0, pixel_grb << 8u);
-}
+
 
 
 int main() {
@@ -48,23 +46,7 @@ int main() {
 
     ws2812_program_init(pio, sm, offset, WS2812_PIN_BASE, 800000, false);
 
-    int t = 0;
-    read_data(&image, header_data);
+    test();
 
-    while (1) {
-
-        //randomize(&image);
-        pack_pixels(&image , screen);
-
-        int brightness = 0;
-        uint current = 0;
-
-
-        for(uint row =0 ; row < NUM_PIXELS_X; row++)
-            for(uint col = 0; col < NUM_PIXELS_Y; col++)
-                put_pixel(screen[row][col]);
-
-        sleep_ms(1000);
-    }
 }
 

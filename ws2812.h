@@ -11,6 +11,9 @@
 #include "hardware/dma.h"
 #include "hardware/irq.h"
 #include "ws2812.pio.h"
+#include "hardware/clocks.h"
+#include "time.h"
+#include "ws2812.pio.h"
 
 
 #define NUM_PIXELS_X 8
@@ -41,5 +44,19 @@ void read_data(frame_t *frame, char * data);
 // Helper functions
 void copy_row(frame_t *frame, uint row, uint32_t **pixels);
 void randomize(frame_t *frame);
+
+
+void blink_effect(frame_t *frame, uint32_t **pixels, uint32_t color1, uint32_t color2, int duration);
+void fade_effect(frame_t *frame, uint32_t **pixels, uint32_t color, int duration, uint8_t steps);
+void randomized_effect(frame_t *frame, uint32_t **pixels, int duration);
+void solid_color(frame_t *frame, uint32_t **pixels, uint32_t color);
+void write_pixels(frame_t *frame);
+void solid_color_effect(frame_t *frame, uint32_t **pixels, uint32_t color);
+void clear_effect(frame_t *frame, uint32_t **pixels);
+void running_light_effect(frame_t *frame, uint32_t **pixels, uint32_t color, int duration);
+void fade_in_out_effect(frame_t *frame, uint32_t **pixels, uint32_t color,uint8_t fading_target , uint8_t num_steps, int duration);
+
+void put_pixel(uint32_t pixel);
+int test();
 
 #endif
