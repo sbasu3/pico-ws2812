@@ -5,8 +5,7 @@
 
 #include "ws2812.h"
 
-static unsigned int width = 8; /**< Width of the LED strip */
-static unsigned int height = 8; /**< Height of the LED strip */
+
 
 /**
  * @brief Macro to extract pixel data from input data.
@@ -21,6 +20,33 @@ static unsigned int height = 8; /**< Height of the LED strip */
 }
 void put_pixel(uint32_t pixel_grb) {
     pio_sm_put_blocking(pio0, 0, pixel_grb << 8u);
+}
+uint8_t extract_r(uint32_t color) {
+    return (color >> 8) & 0xFF;
+}
+
+uint8_t extract_g(uint32_t color) {
+    return (color >> 16) & 0xFF;
+}
+uint8_t extract_b(uint32_t color) {
+    return color & 0xFF;
+}
+void frame_reset(frame_t *frame , uint32_t color) {
+
+    uint8_t r = extract_r(color);
+    uint8_t g = extract_g(color);
+    uint8_t b = extract_b(color);
+
+    memset(frame->r, r, sizeof(frame->r));
+    memset(frame->g, g, sizeof(frame->g));
+    memset(frame->b, b, sizeof(frame->b));
+}
+
+void write_frame(frame_t *frame,uint32_t **pixels, uint32_t color1) {
+        frame_reset(frame,color1);
+        pixel_reset(pixels, color1);
+        pack_pixels(frame, pixels);             //frame -> pixels
+        write_pixels(frame);
 }
 /**
  * @brief Resets all pixels in the LED strip to a specified value.
@@ -41,6 +67,7 @@ void pixel_reset(uint32_t **pixels , uint32_t val){
  */
 void pack_pixels(frame_t *frame ,uint32_t **pixels){
     uint row,col;
+ 
     for( row = 0; row < NUM_PIXELS_Y ; row++){
         copy_row(frame, row , pixels);
     }
@@ -110,20 +137,16 @@ void write_pixels(frame_t *frame) {
 }
 
 void blink_effect(frame_t *frame, uint32_t **pixels, uint32_t color1, uint32_t color2, int duration) {
-    int num_cycles = 1; // Each cycle consists of two states: color1 and color2
+    int num_cycles = 2; // Each cycle consists of two states: color1 and color2
     int cycle;
     for (cycle = 0; cycle < num_cycles; cycle++) {
         // Set pixels to color1
-        pixel_reset(pixels, color1);
-        pack_pixels(frame, pixels);
-        write_pixels(frame);
+        write_frame(frame,pixels,color1);
         // Delay for half of the duration
         sleep_ms(duration / 2);
 
         // Set pixels to color2
-        pixel_reset(pixels, color2);
-        pack_pixels(frame, pixels);
-        write_pixels(frame);
+        write_frame(frame,pixels,color2);
         // Delay for half of the duration
         sleep_ms(duration / 2);
     }
@@ -143,29 +166,31 @@ void fade_effect(frame_t *frame, uint32_t **pixels, uint32_t color, int duration
     current_b = color & 0xFF;
 
     // Calculate the target color values
-    target_r = current_r / 2;
-    target_g = current_g / 2;
-    target_b = current_b / 2;
+    target_r = 0;
+    target_g = 0;
+    target_b = 0;
 
     // Calculate the delta values for each color component
-    delta_r = (target_r - current_r) >> num_steps;
-    delta_g = (target_g - current_g) >> num_steps;
-    delta_b = (target_b - current_b) >> num_steps;
+    delta_r = (current_r - target_r) / num_steps;
+    delta_g = (current_g - target_g) / num_steps;
+    delta_b = (current_b - target_b) / num_steps;
 
     // Perform the fading effect
-    for (step = 0; step < 2<<num_steps; step++) {
+    for (step = 0; step < num_steps; step++) {
         // Update the color values
-        current_r += delta_r;
-        current_g += delta_g;
-        current_b += delta_b;
+        current_r -= delta_r;
+        current_g -= delta_g;
+        current_b -= delta_b;
 
         // Set pixels to the updated color
+        write_frame(frame,pixels, ((current_r << 8) | (current_g << 16) | current_b));
+        /*
         pixel_reset(pixels, (current_r << 8) | (current_g << 16) | current_b);
         pack_pixels(frame, pixels);
         write_pixels(frame);
-
+        */
         // Delay for 10 milliseconds
-        sleep_ms(10);
+        sleep_ms(duration / num_steps);
     }
 }
 

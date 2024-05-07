@@ -19,7 +19,7 @@
 #define NUM_PIXELS_X 8
 #define NUM_PIXELS_Y 8
 #define TOTAL_PIXELS (NUM_PIXELS_X * NUM_PIXELS_Y)
-#define WS2812_PIN_BASE 28
+#define WS2812_PIN_BASE 2
 
 
 enum dir_t { LEFT_TO_RIGHT = 0, RIGHT_TO_LEFT = 1};
@@ -34,10 +34,13 @@ typedef struct {
     uint8_t b[NUM_PIXELS_X][NUM_PIXELS_Y];
 }frame_t;
 
+void frame_reset(frame_t *frame, uint32_t color);
+//void write_frame(frame_t *frame);
+void write_frame(frame_t *frame,uint32_t **pixels, uint32_t color1);
 
 void pixel_reset(uint32_t **pixels, uint32_t val);
 void pack_pixels(frame_t *frame ,uint32_t  **pixels);
-
+void write_pixels(frame_t *frame);
 void read_data(frame_t *frame, char * data);
 
 
@@ -50,7 +53,7 @@ void blink_effect(frame_t *frame, uint32_t **pixels, uint32_t color1, uint32_t c
 void fade_effect(frame_t *frame, uint32_t **pixels, uint32_t color, int duration, uint8_t steps);
 void randomized_effect(frame_t *frame, uint32_t **pixels, int duration);
 void solid_color(frame_t *frame, uint32_t **pixels, uint32_t color);
-void write_pixels(frame_t *frame);
+
 void solid_color_effect(frame_t *frame, uint32_t **pixels, uint32_t color);
 void clear_effect(frame_t *frame, uint32_t **pixels);
 void running_light_effect(frame_t *frame, uint32_t **pixels, uint32_t color, int duration);

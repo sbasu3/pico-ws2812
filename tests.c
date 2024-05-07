@@ -54,9 +54,9 @@ int test() {
 
     // Test fade_effect function
     printf("\nTesting fade_effect function:\n");
-    fade_effect(&frame, pixels, 0xFF0000, 2000, 4);
+    fade_effect(&frame, pixels, 0x34ebd2, 4000, 16);
     printPixels(pixels);
-
+    /*
     // Test randomized_effect function
     printf("\nTesting randomized_effect function:\n");
     randomized_effect(&frame, pixels, 2000);
@@ -81,7 +81,7 @@ int test() {
     printf("\nTesting fade_in_out_effect function:\n");
     fade_in_out_effect(&frame, pixels, 0xFF0000, 4, 4, 2000);
     printPixels(pixels);
-
+    */
     // Free the allocated memory
     for (row = 0; row < NUM_PIXELS_X; row++) {
         free(pixels[row]);
