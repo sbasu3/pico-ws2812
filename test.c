@@ -18,7 +18,7 @@ int test() {
 
     // Test set_pixel function
     pixel_t pixel;
-    set_pixel(&pixel, color);
+    set_pixel(&pixel, color,50);
     assert(pixel.r == 255);
     assert(pixel.g == 0);
     assert(pixel.b == 255);
@@ -26,7 +26,7 @@ int test() {
     // Test set_segment function
     segment_t segment;
     uint32_t colors[3] = {0xFF0000, 0x00FF00, 0x0000FF}; // RGB: red, green, blue
-    set_segment(&segment, ORIENTATION_UP, colors, 3);
+    set_segment(&segment, ORIENTATION_UP, colors, 3,50);
     assert(segment.pixels[0].r == 255);
     assert(segment.pixels[0].g == 0);
     assert(segment.pixels[0].b == 0);
@@ -60,14 +60,14 @@ int test() {
     }
 
     // Test ws2812_set_pixel function
-    ws2812_set_pixel(&ws2812, 0, 0, 0xFF00FF); // Set first pixel of first segment to RGB: 255, 0, 255
+    ws2812_set_pixel(&ws2812, 0, 0, 0xFF00FF,50); // Set first pixel of first segment to RGB: 255, 0, 255
         assert(ws2812.segments[0].pixels[0].r == 255);
         assert(ws2812.segments[0].pixels[0].g == 0);
         assert(ws2812.segments[0].pixels[0].b == 255);
 
     // Test ws2812_set_segment function
     uint32_t segment_colors[2] = {0xFFFF00, 0x00FFFF}; // RGB: yellow, cyan
-    ws2812_set_segment(&ws2812, 1, ORIENTATION_DOWN, segment_colors, 2);
+    ws2812_set_segment(&ws2812, 1, ORIENTATION_DOWN, segment_colors, 2,50);
     assert(ws2812.segments[1].pixels[0].r == 255);
     assert(ws2812.segments[1].pixels[0].g == 255);
     assert(ws2812.segments[1].pixels[0].b == 0);
@@ -78,23 +78,23 @@ int test() {
 
     ws2812_clear(&ws2812);
     // Test ws2812_fade function
-    ws2812_fade(&ws2812, 0xFF0000, 0x00FF00, 100); // Fade from red to green with 100ms delay
+    ws2812_fade(&ws2812, 0xFF0000, 0x00FF00, 100,50); // Fade from red to green with 100ms delay
     // Manual verification required
     ws2812_clear(&ws2812);
     // Test ws2812_solid_color function
-    ws2812_solid_color(&ws2812, 0x0000FF); // Set all pixels to blue
+    ws2812_solid_color(&ws2812, 0x0000FF,50); // Set all pixels to blue
     // Manual verification required
     ws2812_clear(&ws2812);
     // Test ws2812_blink function
-    ws2812_blink(&ws2812, 0xFF0000, 0x00FF00, 500); // Blink between red and green with 500ms delay
+    ws2812_blink(&ws2812, 0xFF0000, 0x00FF00, 500,50); // Blink between red and green with 500ms delay
     // Manual verification required
     ws2812_clear(&ws2812);
     // Test ws2812_running_light function
-    ws2812_running_light(&ws2812, 0xFFFF00, 200); // Run a yellow light with 200ms delay
+    ws2812_running_light(&ws2812, 0xFFFF00, 200,50); // Run a yellow light with 200ms delay
     // Manual verification required
     ws2812_clear(&ws2812);
     // Test ws2812_fade_in_out function
-    ws2812_fade_in_out(&ws2812, 0x00FFFF, 100); // Fade in and out with cyan color and 100ms delay
+    ws2812_fade_in_out(&ws2812, 0x00FFFF, 100,50); // Fade in and out with cyan color and 100ms delay
     // Manual verification required
     ws2812_clear(&ws2812);
     printf("All tests passed!\n");

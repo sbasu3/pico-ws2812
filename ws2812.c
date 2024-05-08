@@ -39,10 +39,11 @@ uint8_t extract_b(uint32_t color) {
  * @param pixel Pointer to the pixel.
  * @param color The 32-bit color value.
  */
-void set_pixel(pixel_t *pixel, uint32_t color) {
-    pixel->r = extract_r(color);
-    pixel->g = extract_g(color);
-    pixel->b = extract_b(color);
+void set_pixel(pixel_t *pixel, uint32_t color, uint8_t brightness) {
+    pixel->r = extract_r(color)*brightness/255;
+    pixel->g = extract_g(color)*brightness/255;
+    pixel->b = extract_b(color)*brightness/255;
+
 }
 
 /**
@@ -52,13 +53,14 @@ void set_pixel(pixel_t *pixel, uint32_t color) {
  * @param color Array of 32-bit color values.
  * @param num_pixels Number of pixels in the segment.
  */
-void set_segment(segment_t *segment, orientation_t dir, uint32_t *color, uint8_t num_pixels) {
+void set_segment(segment_t *segment, orientation_t dir, uint32_t *color,
+                 uint8_t num_pixels, uint8_t brightness) {
      if (num_pixels == 1) {
         for (int i = 0; i < PIXELS_PER_SEG ; i++)
-            set_pixel(&(segment->pixels[i]), *color);
+            set_pixel(&(segment->pixels[i]), *color,brightness);
     }else if(num_pixels < PIXELS_PER_SEG){
         for (int i = 0; i < num_pixels; i++)
-            set_pixel(&(segment->pixels[i]), color[i]);
+            set_pixel(&(segment->pixels[i]), color[i],brightness);
     }
     else {
         if(num_pixels > PIXELS_PER_SEG)
@@ -66,9 +68,9 @@ void set_segment(segment_t *segment, orientation_t dir, uint32_t *color, uint8_t
 
         for (int i = 0; i < num_pixels; i++) {
             if (dir == ORIENTATION_UP) {
-                set_pixel(&(segment->pixels[i]), color[i % num_pixels]);
+                set_pixel(&(segment->pixels[i]), color[i % num_pixels],brightness);
             } else {
-                set_pixel(&(segment->pixels[i]), color[num_pixels - 1 - i % num_pixels]);
+                set_pixel(&(segment->pixels[i]), color[num_pixels - 1 - i % num_pixels],brightness);
             }
         }
     }
@@ -108,7 +110,7 @@ void ws2812_show(ws2812_t *ws2812) {
 void ws2812_clear(ws2812_t *ws2812) {
     uint32_t color = 0x000000;
     for (int i = 0; i < NUM_SEG; i++) {
-        set_segment(&(ws2812->segments[i]), ws2812->orientation[i], &color, 1);
+        set_segment(&(ws2812->segments[i]), ws2812->orientation[i], &color, 1 , 0x0);
     }
     ws2812_show(ws2812);
 }
@@ -120,9 +122,10 @@ void ws2812_clear(ws2812_t *ws2812) {
  * @param pixel The pixel index.
  * @param color The 32-bit color value.
  */
-void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel, uint32_t color) {
+void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel, uint32_t color,
+                        uint8_t brightness) {
     if (seg < NUM_SEG && pixel < PIXELS_PER_SEG) {
-        set_pixel(&ws2812->segments[seg].pixels[pixel], color);
+        set_pixel(&ws2812->segments[seg].pixels[pixel], color,brightness );
     }
 }
 
@@ -134,10 +137,11 @@ void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel, uint32_t col
  * @param color Array of 32-bit color values.
  * @param num_pixels Number of pixels in the segment.
  */
-void ws2812_set_segment(ws2812_t *ws2812, uint8_t seg, orientation_t dir, uint32_t *color, uint8_t num_pixels) {
+void ws2812_set_segment(ws2812_t *ws2812, uint8_t seg, orientation_t dir,
+                         uint32_t *color, uint8_t num_pixels, uint8_t brightness) {
     if (seg < NUM_SEG) {
         ws2812->orientation[seg] = dir;
-        set_segment(&(ws2812->segments[seg]), dir, color, num_pixels);
+        set_segment(&(ws2812->segments[seg]), dir, color, num_pixels,brightness);
     }
 }
 
@@ -148,7 +152,8 @@ void ws2812_set_segment(ws2812_t *ws2812, uint8_t seg, orientation_t dir, uint32
  * @param color2 The ending color.
  * @param delay_ms The delay between each color change.
  */
-void ws2812_fade(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t delay_ms) {
+void ws2812_fade(ws2812_t *ws2812, uint32_t color1, uint32_t color2,
+             uint32_t delay_ms, uint8_t brightness) {
     int r1 = extract_r(color1);
     int g1 = extract_g(color1);
     int b1 = extract_b(color1);
@@ -167,7 +172,7 @@ void ws2812_fade(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t de
     while (r != r2 || g != g2 || b != b2) {
         uint32_t color = (g << 16) | (r << 8) | b;
         for (int i = 0; i < NUM_SEG; i++) {
-            ws2812_set_segment(ws2812, i, ORIENTATION_UP, &color, 1);
+            ws2812_set_segment(ws2812, i, ORIENTATION_UP, &color, 1,brightness);
         }
         ws2812_show(ws2812);
         sleep_ms(delay_ms);
@@ -182,9 +187,9 @@ void ws2812_fade(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t de
  * @param ws2812 Pointer to the ws2812_t structure.
  * @param color The 32-bit color value.
  */
-void ws2812_solid_color(ws2812_t *ws2812, uint32_t color) {
+void ws2812_solid_color(ws2812_t *ws2812, uint32_t color,uint8_t brightness) {
     for (int i = 0; i < NUM_SEG; i++) {
-        ws2812_set_segment(ws2812, i, ORIENTATION_UP, &color, 1);
+        ws2812_set_segment(ws2812, i, ORIENTATION_UP, &color, 1,brightness);
     }
     ws2812_show(ws2812);
 }
@@ -196,10 +201,11 @@ void ws2812_solid_color(ws2812_t *ws2812, uint32_t color) {
  * @param color2 The second color.
  * @param delay_ms The delay between each color change.
  */
-void ws2812_blink(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t delay_ms) {
-    ws2812_solid_color(ws2812, color1);
+void ws2812_blink(ws2812_t *ws2812, uint32_t color1, uint32_t color2,
+         uint32_t delay_ms, uint8_t brightness) {
+    ws2812_solid_color(ws2812, color1, brightness);
     sleep_ms(delay_ms);
-    ws2812_solid_color(ws2812, color2);
+    ws2812_solid_color(ws2812, color2, brightness);
     sleep_ms(delay_ms);
 }
 
@@ -209,17 +215,18 @@ void ws2812_blink(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t d
  * @param color The color of the light.
  * @param delay_ms The delay between each movement of the light.
  */
-void ws2812_running_light(ws2812_t *ws2812, uint32_t color, uint32_t delay_ms) {
+void ws2812_running_light(ws2812_t *ws2812, uint32_t color,
+             uint32_t delay_ms, uint8_t brightness) {
     for (int i = 0; i < PIXELS_PER_SEG; i++) {
         for (int j = 0; j < NUM_SEG; j++) {
-            ws2812_set_pixel(ws2812, j, i, color);
+            ws2812_set_pixel(ws2812, j, i, color,brightness);
         }
         ws2812_show(ws2812);
         sleep_ms(delay_ms);
     }
     for (int i = PIXELS_PER_SEG - 1; i >= 0; i--) {
         for (int j = 0; j < NUM_SEG; j++) {
-            ws2812_set_pixel(ws2812, j, i, 0x000000);
+            ws2812_set_pixel(ws2812, j, i, 0x000000,brightness);
         }
         ws2812_show(ws2812);
         sleep_ms(delay_ms);
@@ -232,7 +239,8 @@ void ws2812_running_light(ws2812_t *ws2812, uint32_t color, uint32_t delay_ms) {
  * @param color The color to fade in and out.
  * @param delay_ms The delay between each fade step.
  */
-void ws2812_fade_in_out(ws2812_t *ws2812, uint32_t color, uint32_t delay_ms) {
-    ws2812_fade(ws2812, 0x000000, color, delay_ms);
-    ws2812_fade(ws2812, color, 0x000000, delay_ms);
+void ws2812_fade_in_out(ws2812_t *ws2812, uint32_t color,
+                         uint32_t delay_ms,uint8_t brightness) {
+    ws2812_fade(ws2812, 0x000000, color, delay_ms,brightness);
+    ws2812_fade(ws2812, color, 0x000000, delay_ms,brightness);
 }

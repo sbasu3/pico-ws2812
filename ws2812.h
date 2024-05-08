@@ -44,7 +44,7 @@ typedef struct {
 }pixel_t;
 
 //pixel functions
-void set_pixel(pixel_t *pixel, uint32_t color);
+void set_pixel(pixel_t *pixel, uint32_t color, uint8_t brightness);
 
 
 
@@ -59,7 +59,8 @@ typedef struct{
     pixel_t pixels[PIXELS_PER_SEG];
 }segment_t;
 
-void set_segment(segment_t *segment, orientation_t dir,uint32_t *color,uint8_t num_pixels);
+void set_segment(segment_t *segment, orientation_t dir,uint32_t *color,uint8_t num_pixels,
+                    uint8_t brightness);
 
 
 
@@ -71,14 +72,20 @@ typedef struct{
 void ws2812_init(ws2812_t *ws2812);
 void ws2812_show(ws2812_t *ws2812);
 void ws2812_clear(ws2812_t *ws2812);
-void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel, uint32_t color);
-void ws2812_set_segment(ws2812_t *ws2812, uint8_t seg, orientation_t dir, uint32_t *color, uint8_t num_pixels);
+void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel,
+                        uint32_t color, uint8_t brightness);
+void ws2812_set_segment(ws2812_t *ws2812, uint8_t seg, orientation_t dir,
+                         uint32_t *color, uint8_t num_pixels, uint8_t brightness);
 
-void ws2812_blink(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t delay_ms);
-void ws2812_fade(ws2812_t *ws2812, uint32_t color1, uint32_t color2, uint32_t delay_ms);
-void ws2812_solid_color(ws2812_t *ws2812, uint32_t color);
-void ws2812_running_light(ws2812_t *ws2812, uint32_t color, uint32_t delay_ms);
-void ws2812_fade_in_out(ws2812_t *ws2812, uint32_t color, uint32_t delay_ms);
+void ws2812_blink(ws2812_t *ws2812, uint32_t color1, uint32_t color2,
+                 uint32_t delay_ms,uint8_t brightness);
+void ws2812_fade(ws2812_t *ws2812, uint32_t color1,
+                 uint32_t color2, uint32_t delay_ms, uint8_t brightness);
+void ws2812_solid_color(ws2812_t *ws2812, uint32_t color,uint8_t brightness);
+void ws2812_running_light(ws2812_t *ws2812, uint32_t color,
+                         uint32_t delay_ms,uint8_t brightness);
+void ws2812_fade_in_out(ws2812_t *ws2812, uint32_t color,
+                         uint32_t delay_ms,uint8_t brightness);
 
 
 int test();
