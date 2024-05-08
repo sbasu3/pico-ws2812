@@ -25,7 +25,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(pico_ws2812 pico_ws2812.c ws2812.c tests.c)
+add_executable(pico_ws2812 pico_ws2812.c ws2812.c test.c)
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/generated)
 
