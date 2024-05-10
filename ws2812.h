@@ -20,6 +20,9 @@
 #define NUM_SEG 2
 #define TOTAL_PIXELS (PIXEL_PER_SEG * NUM_SEG)
 #define WS2812_PIN_BASE 2
+
+
+
 // Helper functions
 // color contains RGB data
 uint8_t extract_r(uint32_t color);

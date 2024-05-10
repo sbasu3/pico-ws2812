@@ -40,9 +40,9 @@ uint8_t extract_b(uint32_t color) {
  * @param color The 32-bit color value.
  */
 void set_pixel(pixel_t *pixel, uint32_t color, uint8_t brightness) {
-    pixel->r = extract_r(color)*brightness/255;
-    pixel->g = extract_g(color)*brightness/255;
-    pixel->b = extract_b(color)*brightness/255;
+    pixel->r = extract_r(color)*brightness/100;
+    pixel->g = extract_g(color)*brightness/100;
+    pixel->b = extract_b(color)*brightness/100;
 
 }
 
