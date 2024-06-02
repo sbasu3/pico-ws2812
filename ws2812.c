@@ -80,7 +80,21 @@ void set_segment(segment_t *segment, orientation_t dir, uint32_t *color,
  * @brief Initializes the WS2812 LED strip.
  * @param ws2812 Pointer to the ws2812_t structure.
  */
-void ws2812_init(ws2812_t *ws2812) {
+void ws2812_init(ws2812_t *ws2812, PIO *pio, uint state_machine_id, uint8_t pin_base, uint freq){
+
+
+    ws2812->pio = pio;
+    ws2812->state_machine_id= pio_claim_unused_sm(pio, true);
+    ws2812->pin_base = pin_base;
+    ws2812->freq = freq;
+
+    uint offset = pio_add_program(pio, &ws2812_program);
+
+
+
+
+    ws2812_program_init(ws2812->pio, ws2812->state_machine_id, offset, ws2812->pin_base, ws2812->freq, false);
+
     for (int i = 0; i < NUM_SEG; i++) {
         ws2812->orientation[i] = ORIENTATION_UP;
         for (int j = 0; j < PIXELS_PER_SEG; j++) {
@@ -98,7 +112,7 @@ void ws2812_init(ws2812_t *ws2812) {
 void ws2812_show(ws2812_t *ws2812) {
     for (int i = 0; i < NUM_SEG; i++) {
         for (int j = 0; j < PIXELS_PER_SEG; j++) {
-            pio_sm_put_blocking(pio0, 0, (ws2812->segments[i].pixels[j].g << 16 | ws2812->segments[i].pixels[j].r << 8 | ws2812->segments[i].pixels[j].b) << 8u);
+            pio_sm_put_blocking(ws2812->pio, ws2812->state_machine_id, (ws2812->segments[i].pixels[j].g << 16 | ws2812->segments[i].pixels[j].r << 8 | ws2812->segments[i].pixels[j].b) << 8u);
         }
     }
 }

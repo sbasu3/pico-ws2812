@@ -8,7 +8,7 @@
 #include "pico/stdlib.h"
 #include "pico/sem.h"
 #include "hardware/pio.h"
-#include "hardware/dma.h"
+//#include "hardware/dma.h"
 #include "hardware/irq.h"
 #include "ws2812.pio.h"
 #include "hardware/clocks.h"
@@ -19,7 +19,7 @@
 #define PIXELS_PER_SEG 8
 #define NUM_SEG 2
 #define TOTAL_PIXELS (PIXEL_PER_SEG * NUM_SEG)
-#define WS2812_PIN_BASE 2
+
 
 
 
@@ -70,9 +70,13 @@ void set_segment(segment_t *segment, orientation_t dir,uint32_t *color,uint8_t n
 typedef struct{
     segment_t segments[NUM_SEG];
     orientation_t orientation[NUM_SEG];
+    uint8_t pin_base;
+    PIO pio;
+    uint state_machine_id;
+    uint    freq;
 }ws2812_t;
 
-void ws2812_init(ws2812_t *ws2812);
+void ws2812_init(ws2812_t *ws2812, PIO *pio, uint state_machine_id, uint8_t pin_base, uint freq);
 void ws2812_show(ws2812_t *ws2812);
 void ws2812_clear(ws2812_t *ws2812);
 void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel,
