@@ -76,7 +76,7 @@ typedef struct{
     uint    freq;
 }ws2812_t;
 
-void ws2812_init(ws2812_t *ws2812, PIO *pio, uint state_machine_id, uint8_t pin_base, uint freq);
+void ws2812_init(ws2812_t *ws2812, PIO pio, uint state_machine_id, uint8_t pin_base, uint freq);
 void ws2812_show(ws2812_t *ws2812);
 void ws2812_clear(ws2812_t *ws2812);
 void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel,

@@ -80,7 +80,7 @@ void set_segment(segment_t *segment, orientation_t dir, uint32_t *color,
  * @brief Initializes the WS2812 LED strip.
  * @param ws2812 Pointer to the ws2812_t structure.
  */
-void ws2812_init(ws2812_t *ws2812, PIO *pio, uint state_machine_id, uint8_t pin_base, uint freq){
+void ws2812_init(ws2812_t *ws2812, PIO pio, uint state_machine_id, uint8_t pin_base, uint freq){
 
 
     ws2812->pio = pio;
