@@ -1,0 +1,53 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BLINK	ws2812.h	/^    BLINK = 0,$/;"	e	enum:__anon1
+CLEAR	ws2812.h	/^    CLEAR,$/;"	e	enum:__anon1
+FADE	ws2812.h	/^    FADE,$/;"	e	enum:__anon1
+FADE_IN_OUT	ws2812.h	/^    FADE_IN_OUT$/;"	e	enum:__anon1
+NUM_SEG	ws2812.h	20;"	d
+ORIENTATION_DOWN	ws2812.h	/^    ORIENTATION_DOWN$/;"	e	enum:__anon3
+ORIENTATION_UP	ws2812.h	/^    ORIENTATION_UP = 0,$/;"	e	enum:__anon3
+PIXELS_PER_SEG	ws2812.h	19;"	d
+RANDOMIZED	ws2812.h	/^    RANDOMIZED,$/;"	e	enum:__anon1
+RUNNING_LIGHT	ws2812.h	/^    RUNNING_LIGHT,$/;"	e	enum:__anon1
+SOLID_COLOR	ws2812.h	/^    SOLID_COLOR,$/;"	e	enum:__anon1
+TOTAL_PIXELS	ws2812.h	21;"	d
+WS2812_PIN_BASE	pico_ws2812.c	9;"	d	file:
+__WS2812__	ws2812.h	2;"	d
+b	ws2812.h	/^    uint8_t b;$/;"	m	struct:__anon2
+effect_t	ws2812.h	/^}effect_t;$/;"	t	typeref:enum:__anon1
+extract_b	ws2812.c	/^uint8_t extract_b(uint32_t color) {$/;"	f
+extract_g	ws2812.c	/^uint8_t extract_g(uint32_t color) {$/;"	f
+extract_r	ws2812.c	/^uint8_t extract_r(uint32_t color) {$/;"	f
+freq	ws2812.h	/^    uint    freq;$/;"	m	struct:__anon5
+g	ws2812.h	/^    uint8_t g;$/;"	m	struct:__anon2
+main	pico_ws2812.c	/^int main() {$/;"	f
+orientation	ws2812.h	/^    orientation_t orientation[NUM_SEG];$/;"	m	struct:__anon5
+orientation_t	ws2812.h	/^}orientation_t;$/;"	t	typeref:enum:__anon3
+pin_base	ws2812.h	/^    uint8_t pin_base;$/;"	m	struct:__anon5
+pio	ws2812.h	/^    PIO pio;$/;"	m	struct:__anon5
+pixel_t	ws2812.h	/^}pixel_t;$/;"	t	typeref:struct:__anon2
+pixels	ws2812.c	/^pixel_t pixels;$/;"	v
+pixels	ws2812.h	/^    pixel_t pixels[PIXELS_PER_SEG];$/;"	m	struct:__anon4
+r	ws2812.h	/^    uint8_t r;$/;"	m	struct:__anon2
+segment_t	ws2812.h	/^}segment_t;$/;"	t	typeref:struct:__anon4
+segments	ws2812.h	/^    segment_t segments[NUM_SEG];$/;"	m	struct:__anon5
+set_pixel	ws2812.c	/^void set_pixel(pixel_t *pixel, uint32_t color, uint8_t brightness) {$/;"	f
+set_segment	ws2812.c	/^void set_segment(segment_t *segment, orientation_t dir, uint32_t *color,$/;"	f
+state_machine_id	ws2812.h	/^    uint state_machine_id;$/;"	m	struct:__anon5
+test	test.c	/^int test() {$/;"	f
+ws2812_blink	ws2812.c	/^void ws2812_blink(ws2812_t *ws2812, uint32_t color1, uint32_t color2,$/;"	f
+ws2812_clear	ws2812.c	/^void ws2812_clear(ws2812_t *ws2812) {$/;"	f
+ws2812_fade	ws2812.c	/^void ws2812_fade(ws2812_t *ws2812, uint32_t color1, uint32_t color2,$/;"	f
+ws2812_fade_in_out	ws2812.c	/^void ws2812_fade_in_out(ws2812_t *ws2812, uint32_t color,$/;"	f
+ws2812_init	ws2812.c	/^void ws2812_init(ws2812_t *ws2812, PIO pio, uint state_machine_id, uint8_t pin_base, uint freq){$/;"	f
+ws2812_running_light	ws2812.c	/^void ws2812_running_light(ws2812_t *ws2812, uint32_t color,$/;"	f
+ws2812_set_pixel	ws2812.c	/^void ws2812_set_pixel(ws2812_t *ws2812, uint8_t seg, uint8_t pixel, uint32_t color,$/;"	f
+ws2812_set_segment	ws2812.c	/^void ws2812_set_segment(ws2812_t *ws2812, uint8_t seg, orientation_t dir,$/;"	f
+ws2812_show	ws2812.c	/^void ws2812_show(ws2812_t *ws2812) {$/;"	f
+ws2812_solid_color	ws2812.c	/^void ws2812_solid_color(ws2812_t *ws2812, uint32_t color,uint8_t brightness) {$/;"	f
+ws2812_t	ws2812.h	/^}ws2812_t;$/;"	t	typeref:struct:__anon5

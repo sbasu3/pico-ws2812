@@ -72,6 +72,7 @@ typedef struct{
     orientation_t orientation[NUM_SEG];
     uint8_t pin_base;
     PIO pio;
+    uint offset;
     uint state_machine_id;
     uint    freq;
 }ws2812_t;

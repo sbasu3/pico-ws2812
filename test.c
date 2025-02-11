@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "ws2812.h"
 
-int test() {
+int test(ws2812_t ws2812) {
     // Test extract_r function
     uint32_t color = 0xFF00FF; // RGB: 255, 0, 255
     uint8_t r = extract_r(color);
@@ -39,8 +39,8 @@ int test() {
     assert(segment.pixels[2].b == 255*brightness/100);
 
     // Test ws2812_init function
-    ws2812_t ws2812;
-    ws2812_init(&ws2812);
+    //ws2812_t ws2812;
+    ws2812_init(&ws2812 , ws2812.pio , ws2812.state_machine_id,ws2812.pin_base,ws2812.freq);
     for (int i = 0; i < NUM_SEG; i++) {
         assert(ws2812.orientation[i] == ORIENTATION_UP);
         for (int j = 0; j < PIXELS_PER_SEG; j++) {
