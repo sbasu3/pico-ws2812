@@ -8,6 +8,7 @@
           "request": "launch",
           "type": "cortex-debug",
           "servertype": "openocd",
+          "serverpath": "/home/subho/code/openocd/src/openocd",
           // This may need to be arm-none-eabi-gdb depending on your system
           "gdbPath" : "gdb-multiarch",
           "device": "RP2040",
@@ -15,6 +16,7 @@
               "interface/cmsis-dap.cfg",
               "target/rp2040.cfg"
           ],
+          "showDevDebugOutput": "raw",
           "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
           "runToEntryPoint": "main",
           "openOCDLaunchCommands": [
@@ -25,7 +27,7 @@
               "break main",
               "continue"
           ],
-          "searchDir": ["/home/subho/code/pico/openocd/tcl"],
+          "searchDir": ["/home/subho/code/openocd/tcl"]
       }
   ]
 }
