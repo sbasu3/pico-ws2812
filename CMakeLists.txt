@@ -20,6 +20,7 @@ endif()
 
 project(pico_ws2812 C CXX ASM)
 
+set(CMAKE_BUILD_TYPE Debug)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
